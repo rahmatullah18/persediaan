@@ -5,14 +5,12 @@ import Sidebar from './sidebar';
 export default function Layout({ children }) {
     return <>
         <div>
-            <div className='bg-gray-500'>
-                <Navbar />
-            </div>
+            <Navbar />
             <div className='grid grid-cols-10'>
-                <div className='h-screen col-span-1 bg-gray-400'>
+                <div className='h-screen col-span-2 bg-white'>
                     <Sidebar />
                 </div>
-                <div className="col-span-9 bg-gray-700">
+                <div className="col-span-8 px-4 bg-gray-200 py-7">
                     {children}
                 </div>
             </div>
