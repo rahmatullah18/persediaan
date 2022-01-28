@@ -3,8 +3,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { Fragment } from 'react';
 import favicon from "../../public/favicon.ico"
+import nookies from 'nookies';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export default function DropDownProfile() {
+    const router = useRouter();
+    const handlerLogout = (e) => {
+        e.preventDefault()
+        axios.post('/api/logout').then(res => {
+            if (res.data.status === 200) {
+                nookies.destroy(null, 'token')
+                nookies.destroy(null, 'auth_name')
+                router.replace('/login')
+            } else {
+
+            }
+        });
+    }
     return <div className=''>
         <Menu as="div" className="relative inline-block text-left">
             <Menu.Button className="">
@@ -29,6 +45,17 @@ export default function DropDownProfile() {
                                     Account settings
                                 </a>
                             </Link>
+                        )}
+                    </Menu.Item>
+                    <Menu.Item>
+                        {({ active }) => (
+                            <form onSubmit={handlerLogout} >
+                                <button
+                                    className={`${active ? 'bg-violet-500 text-white' : "text-white"} bg-red-500 group justify-center flex  items-center rounded-b-md w-full px-2 py-2 text-sm font-bold`}
+                                >
+                                    Logout
+                                </button>
+                            </form>
                         )}
                     </Menu.Item>
                 </Menu.Items>
